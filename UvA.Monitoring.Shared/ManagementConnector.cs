@@ -56,13 +56,16 @@ namespace UvA.Monitoring.Shared
 
         public async Task GetContent()
         {
-            var windowStart = new DateTime(2021, 1, 8, 11, 0, 0);
+            var windowStart = new DateTime(2021, 2, 19, 16, 0, 0);
             var windowEnd = windowStart.AddHours(8);
             var test = JsonDocument.Parse(await Client.GetStringAsync($"subscriptions/content?{DefaultParams}&startTime={windowStart:yyyy-MM-dd}T{windowStart:HH:mm}&endTime={windowEnd:yyyy-MM-dd}T{windowEnd:HH:mm}")).RootElement.EnumerateArray().ToArray();
             Console.WriteLine($"{test.Count()} entries");
-            while (true)
+            int entry = 0;
+            var allRecords = new List<AuditRecord>();
+            while (entry < test.Length)
             {
-                Console.Write("Get entry: ");
+                Console.Write($"Get entry {entry}: ");
+                //var ent = test[entry++];
                 var ent = test[int.Parse(Console.ReadLine())];
                 var id = ent.GetProperty("contentId").GetString();
                 var start = DateTime.ParseExact(id.Substring(0, 14), "yyyyMMddHHmmss", null);
@@ -71,14 +74,22 @@ namespace UvA.Monitoring.Shared
                 var url = ent.GetProperty("contentUri").GetString();
 
                 var records = await GetContentItem(url);
+                allRecords.AddRange(records);
                 foreach (var group in records.GroupBy(r => r.Operation))
                 {
                     Console.WriteLine($"\t{group.Key}: {group.Count()}");
-                    if (group.Key == "MemberAdded")
+                    if (group.Key == "TeamSettingChanged")
                         Console.WriteLine("??");
                 }
             }
 
+            Console.WriteLine();
+            foreach (var group in allRecords.GroupBy(r => r.Operation))
+            {
+                Console.WriteLine($"\t{group.Key}: {group.Count()}");
+                if (group.Key == "TeamSettingChanged")
+                    Console.WriteLine("??");
+            }
         }
 
         public async Task<AuditRecord[]> GetContentItem(string uri)
@@ -98,9 +109,19 @@ namespace UvA.Monitoring.Shared
             public string ObjectId { get; set; }
             public string Workload { get; set; }
             public string AADGroupId { get; set; }
+            public Member[] Members { get; set; }
+
+            public string NewValue { get; set; }
+            public string Name { get; set; }
+            public string TeamGuid { get; set; }
 
             public override string ToString()
                 => $"{Workload}: {Operation}";
+        }
+
+        public class Member
+        {
+            public string UPN { get; set; }
         }
     }
 }

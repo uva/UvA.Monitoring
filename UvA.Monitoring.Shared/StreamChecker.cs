@@ -18,15 +18,19 @@ namespace UvA.Monitoring.Shared
         ManagementConnector Connector;
         HttpClient Client;
 
-        string ReportUrl;
+        string MemberReportUrl;
+        string SettingReportUrl;
+        string TenantId;
 
-        public StreamChecker(ILogger log, IConfiguration config)
+        public StreamChecker(ILogger log, IConfiguration config, string tenant)
         {
+            TenantId = tenant;
             Log = log;
             Connector = new ManagementConnector(config);
             Client = new HttpClient();
 
-            ReportUrl = config["ReportUrl"];
+            MemberReportUrl = config["ReportUrl"];
+            SettingReportUrl = config["SettingReportUrl"];
         }
 
         public async Task Connect()
@@ -53,12 +57,24 @@ namespace UvA.Monitoring.Shared
                     Log.LogWarning(ev.UserId);
             }
 
-            var memberAdd = res.Where(r => r.Operation == "MemberAdded");
+            var memberAdd = res.Where(r => r.Operation == "MemberAdded" && !string.IsNullOrEmpty(r.AADGroupId) && r.Members != null);
             foreach (var ev in memberAdd)
-                await Client.PostJsonAsync(ReportUrl, new
+                foreach (var mem in ev.Members)
+                    await Client.PostJsonAsync(MemberReportUrl, new
+                    {
+                        UserId = mem.UPN,
+                        GroupId = ev.AADGroupId,
+                        TenantId = TenantId
+                    });
+
+
+            foreach (var ev in res.Where(r => r.Operation == "TeamSettingChanged" && r.NewValue == "public" && r.Name == "Team access type"))
+                await Client.PostJsonAsync(SettingReportUrl, new
                 {
+                    TeamId = ev.TeamGuid,
                     UserId = ev.UserId,
-                    GroupId = ev.AADGroupId
+                    TenantId = TenantId,
+                    ev.CreationTime
                 });
         }
     }

@@ -32,7 +32,7 @@ namespace UvA.Monitoring.Functions
                 log.LogInformation($"Received {data.Count} blocks");
                 var tenantId = (string)data[0]["tenantId"];
                 var tenant = tenants.First(t => t["tenantId"] == tenantId);
-                var checker = new StreamChecker(log, tenant);
+                var checker = new StreamChecker(log, tenant, tenantId);
                 await checker.Connect();
                 foreach (var el in payload)
                     await checker.Check(el["contentUri"].ToString());
