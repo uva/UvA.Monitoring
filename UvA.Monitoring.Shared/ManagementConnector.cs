@@ -54,6 +54,25 @@ namespace UvA.Monitoring.Shared
             });
         }
 
+        public async Task StopSubscription()
+        {
+            var res = await Client.PostJsonAsync($"subscriptions/stop?{DefaultParams}", new
+            {
+            });
+        }
+
+        public async Task GetSubscriptions()
+        {
+            var json = await Client.GetStringAsync($"subscriptions/list?{DefaultParams}");
+        }
+
+        public async Task GetNotifications()
+        {
+            var windowStart = new DateTime(2021, 3, 28, 9, 0, 0);
+            var windowEnd = windowStart.AddHours(8);
+            var json = await Client.GetStringAsync($"subscriptions/notifications?{DefaultParams}&startTime={windowStart:yyyy-MM-dd}T{windowStart:HH:mm}&endTime={windowEnd:yyyy-MM-dd}T{windowEnd:HH:mm}");
+        }
+
         public async Task GetContent()
         {
             var windowStart = new DateTime(2021, 2, 19, 16, 0, 0);

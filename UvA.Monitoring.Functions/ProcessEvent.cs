@@ -29,8 +29,8 @@ namespace UvA.Monitoring.Functions
                     .AddEnvironmentVariables()
                     .Build();
                 var tenants = new[] { conf.GetSection("UvA"), conf.GetSection("HvA") };
-                log.LogInformation($"Received {data.Count} blocks");
                 var tenantId = (string)data[0]["tenantId"];
+                log.LogInformation($"Received {data.Count} blocks (tenant {tenantId})");
                 var tenant = tenants.First(t => t["tenantId"] == tenantId);
                 var checker = new StreamChecker(log, tenant, tenantId);
                 await checker.Connect();
