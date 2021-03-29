@@ -73,6 +73,14 @@ namespace UvA.Monitoring.Shared
             var json = await Client.GetStringAsync($"subscriptions/notifications?{DefaultParams}&startTime={windowStart:yyyy-MM-dd}T{windowStart:HH:mm}&endTime={windowEnd:yyyy-MM-dd}T{windowEnd:HH:mm}");
         }
 
+        public async Task<string[]> GetContentUrls(DateTime windowStart)
+        {
+            var windowEnd = windowStart.AddHours(8);
+            var json = await Client.GetStringAsync($"subscriptions/content?{DefaultParams}&startTime={windowStart:yyyy-MM-dd}T{windowStart:HH:mm}&endTime={windowEnd:yyyy-MM-dd}T{windowEnd:HH:mm}");
+            var entries = JsonDocument.Parse(json).RootElement.EnumerateArray().ToArray();
+            return entries.Select(e => e.GetProperty("contentUri").GetString()).ToArray();
+        }
+
         public async Task GetContent()
         {
             var windowStart = new DateTime(2021, 2, 19, 16, 0, 0);

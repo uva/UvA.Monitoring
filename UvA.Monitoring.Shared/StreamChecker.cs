@@ -43,7 +43,6 @@ namespace UvA.Monitoring.Shared
             foreach (var ev in stream)
             {
                 var obj = string.IsNullOrWhiteSpace(ev.OperationDetails) ? null : JObject.Parse(ev.OperationDetails);
-                Log.LogInformation($"{ev.UserId} {ev.Operation}: {ev.OperationDetails}");
                 if (ev.Operation == "StreamEditVideo")
                 {
                     var before = (string)obj["Before"]["PrivacyMode"];
