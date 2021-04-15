@@ -2,6 +2,7 @@
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -66,9 +67,12 @@ namespace UvA.Monitoring.Shared
             var json = await Client.GetStringAsync($"subscriptions/list?{DefaultParams}");
         }
 
+        /// <summary>
+        /// For diagnosing webhook issues
+        /// </summary>
         public async Task GetNotifications()
         {
-            var windowStart = new DateTime(2021, 3, 28, 9, 0, 0);
+            var windowStart = new DateTime(2021, 3, 28, 8, 0, 0);
             var windowEnd = windowStart.AddHours(8);
             var json = await Client.GetStringAsync($"subscriptions/notifications?{DefaultParams}&startTime={windowStart:yyyy-MM-dd}T{windowStart:HH:mm}&endTime={windowEnd:yyyy-MM-dd}T{windowEnd:HH:mm}");
         }
@@ -81,19 +85,22 @@ namespace UvA.Monitoring.Shared
             return entries.Select(e => e.GetProperty("contentUri").GetString()).ToArray();
         }
 
-        public async Task GetContent()
+        /// <summary>
+        /// For testing purposes
+        /// </summary>
+        public async Task GetContent(DateTime windowStart)
         {
-            var windowStart = new DateTime(2021, 2, 19, 16, 0, 0);
             var windowEnd = windowStart.AddHours(8);
-            var test = JsonDocument.Parse(await Client.GetStringAsync($"subscriptions/content?{DefaultParams}&startTime={windowStart:yyyy-MM-dd}T{windowStart:HH:mm}&endTime={windowEnd:yyyy-MM-dd}T{windowEnd:HH:mm}")).RootElement.EnumerateArray().ToArray();
+            var json = await Client.GetStringAsync($"subscriptions/content?{DefaultParams}&startTime={windowStart:yyyy-MM-dd}T{windowStart:HH:mm}&endTime={windowEnd:yyyy-MM-dd}T{windowEnd:HH:mm}");
+            var test = JsonDocument.Parse(json).RootElement.EnumerateArray().ToArray();
             Console.WriteLine($"{test.Count()} entries");
             int entry = 0;
             var allRecords = new List<AuditRecord>();
             while (entry < test.Length)
             {
                 Console.Write($"Get entry {entry}: ");
-                //var ent = test[entry++];
-                var ent = test[int.Parse(Console.ReadLine())];
+                var ent = test[entry++];
+                //var ent = test[int.Parse(Console.ReadLine())];
                 var id = ent.GetProperty("contentId").GetString();
                 var start = DateTime.ParseExact(id.Substring(0, 14), "yyyyMMddHHmmss", null);
                 var end = DateTime.ParseExact(id.Split('$')[1].Substring(0, 14), "yyyyMMddHHmmss", null);
@@ -105,7 +112,7 @@ namespace UvA.Monitoring.Shared
                 foreach (var group in records.GroupBy(r => r.Operation))
                 {
                     Console.WriteLine($"\t{group.Key}: {group.Count()}");
-                    if (group.Key == "TeamSettingChanged")
+                    if (group.Key == "TeamSettingChanged" || group.Any(r => r.UserId == "g.oomens@uva.nl"))
                         Console.WriteLine("??");
                 }
             }

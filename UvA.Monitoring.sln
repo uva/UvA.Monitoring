@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UvA.Monitoring.TestTool", "UvA.Monitoring.TestTool\UvA.Monitoring.TestTool.csproj", "{C7CC6A47-61DD-4D91-AACA-78F5D26CF9DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UvA.Monitoring.TestTool", "UvA.Monitoring.TestTool\UvA.Monitoring.TestTool.csproj", "{C7CC6A47-61DD-4D91-AACA-78F5D26CF9DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UvA.Monitoring.Functions", "UvA.Monitoring.Functions\UvA.Monitoring.Functions.csproj", "{743DC6C0-B937-4E01-9D75-85D52174EB1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UvA.Monitoring.Functions", "UvA.Monitoring.Functions\UvA.Monitoring.Functions.csproj", "{743DC6C0-B937-4E01-9D75-85D52174EB1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UvA.Monitoring.Shared", "UvA.Monitoring.Shared\UvA.Monitoring.Shared.csproj", "{3462BE43-5A31-437C-AA2D-B6E6EA1CDA56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UvA.Monitoring.Shared", "UvA.Monitoring.Shared\UvA.Monitoring.Shared.csproj", "{3462BE43-5A31-437C-AA2D-B6E6EA1CDA56}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UvA.Monitoring.Endpoint", "UvA.Monitoring.Endpoint\UvA.Monitoring.Endpoint.csproj", "{2EFC9A34-2B6C-4349-B78A-5CFAA0FDE681}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UvA.Monitoring.Worker", "UvA.Monitoring.Worker\UvA.Monitoring.Worker.csproj", "{0B26DC5E-413A-4F02-9937-8F7F6F6AAF02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{3462BE43-5A31-437C-AA2D-B6E6EA1CDA56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3462BE43-5A31-437C-AA2D-B6E6EA1CDA56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3462BE43-5A31-437C-AA2D-B6E6EA1CDA56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EFC9A34-2B6C-4349-B78A-5CFAA0FDE681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EFC9A34-2B6C-4349-B78A-5CFAA0FDE681}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EFC9A34-2B6C-4349-B78A-5CFAA0FDE681}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EFC9A34-2B6C-4349-B78A-5CFAA0FDE681}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B26DC5E-413A-4F02-9937-8F7F6F6AAF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B26DC5E-413A-4F02-9937-8F7F6F6AAF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B26DC5E-413A-4F02-9937-8F7F6F6AAF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B26DC5E-413A-4F02-9937-8F7F6F6AAF02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

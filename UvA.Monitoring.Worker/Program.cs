@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UvA.Monitoring.Endpoint
+namespace UvA.Monitoring.Worker
 {
     public class Program
     {
@@ -18,9 +16,10 @@ namespace UvA.Monitoring.Endpoint
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureServices((hostContext, services) =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    services.AddHostedService<UvAWorker>();
+                    services.AddHostedService<HvAWorker>();
                 });
     }
 }
