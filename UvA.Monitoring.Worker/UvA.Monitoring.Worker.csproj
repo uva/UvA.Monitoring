@@ -9,9 +9,4 @@
   <ItemGroup>
     <ProjectReference Include="..\UvA.Monitoring.Shared\UvA.Monitoring.Shared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Update="Settings.job">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

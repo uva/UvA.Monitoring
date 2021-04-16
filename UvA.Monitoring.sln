@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UvA.Monitoring.Functions", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UvA.Monitoring.Shared", "UvA.Monitoring.Shared\UvA.Monitoring.Shared.csproj", "{3462BE43-5A31-437C-AA2D-B6E6EA1CDA56}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UvA.Monitoring.Endpoint", "UvA.Monitoring.Endpoint\UvA.Monitoring.Endpoint.csproj", "{2EFC9A34-2B6C-4349-B78A-5CFAA0FDE681}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UvA.Monitoring.Worker", "UvA.Monitoring.Worker\UvA.Monitoring.Worker.csproj", "{0B26DC5E-413A-4F02-9937-8F7F6F6AAF02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UvA.Monitoring.Worker", "UvA.Monitoring.Worker\UvA.Monitoring.Worker.csproj", "{0B26DC5E-413A-4F02-9937-8F7F6F6AAF02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{3462BE43-5A31-437C-AA2D-B6E6EA1CDA56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3462BE43-5A31-437C-AA2D-B6E6EA1CDA56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3462BE43-5A31-437C-AA2D-B6E6EA1CDA56}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EFC9A34-2B6C-4349-B78A-5CFAA0FDE681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EFC9A34-2B6C-4349-B78A-5CFAA0FDE681}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EFC9A34-2B6C-4349-B78A-5CFAA0FDE681}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EFC9A34-2B6C-4349-B78A-5CFAA0FDE681}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B26DC5E-413A-4F02-9937-8F7F6F6AAF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B26DC5E-413A-4F02-9937-8F7F6F6AAF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B26DC5E-413A-4F02-9937-8F7F6F6AAF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
